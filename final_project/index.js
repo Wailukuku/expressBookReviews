@@ -11,8 +11,17 @@ app.use(express.json());
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
 
 app.use("/customer/auth/*", function auth(req,res,next){
-//Write the authenication mechanism here
-});
+
+    const username = req.body.username;
+
+    // Check if username or password is missing
+    if (!username) {
+        return res.status(404).json({ message: "Error logging in" });
+    }
+    next();
+    
+}
+);
  
 const PORT =5000;
 
